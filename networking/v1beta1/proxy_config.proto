@@ -127,6 +127,12 @@ message ProxyConfig {
 
   // Specifies the details of the proxy image.
   ProxyImage image = 4;
+
+  // Enables HTTP/2 extended CONNECT support on sidecar HTTP listeners.
+  // This allows proxies to accept WebSocket upgrades tunneled with RFC 8441.
+  // The setting affects generated sidecar listener HTTP connection managers; it
+  // does not configure upstream clusters.
+  google.protobuf.BoolValue enable_http2_connect = 5;
 }
 
 // The following values are used to construct proxy image url.

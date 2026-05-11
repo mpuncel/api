@@ -107,6 +107,18 @@ Names starting with <code>ISTIO_META_</code> will be included in the generated b
 
 </td>
 </tr>
+<tr id="ProxyConfig-enable_http2_connect">
+<td><div class="field"><div class="name"><code><a href="#ProxyConfig-enable_http2_connect">enableHttp2Connect</a></code></div>
+<div class="type"><a href="https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#boolvalue">BoolValue</a></div>
+</div></td>
+<td>
+<p>Enables HTTP/2 extended CONNECT support on sidecar HTTP listeners.
+This allows proxies to accept WebSocket upgrades tunneled with RFC 8441.
+The setting affects generated sidecar listener HTTP connection managers; it
+does not configure upstream clusters.</p>
+
+</td>
+</tr>
 </tbody>
 </table>
 </section>

@@ -8089,6 +8089,11 @@ spec:
                 minimum: 0
                 nullable: true
                 type: integer
+              enableHttp2Connect:
+                description: Enables HTTP/2 extended CONNECT support on sidecar HTTP
+                  listeners.
+                nullable: true
+                type: boolean
               environmentVariables:
                 additionalProperties:
                   maxLength: 2048

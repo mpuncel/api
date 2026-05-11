@@ -773,6 +773,12 @@ message ProxyConfig {
   // Defaults to true.
   // Optional.
   google.protobuf.BoolValue stats_compression = 42;
+
+  // Enables HTTP/2 extended CONNECT support on sidecar HTTP listeners.
+  // This allows proxies to accept WebSocket upgrades tunneled with RFC 8441.
+  // The setting affects generated sidecar listener HTTP connection managers; it
+  // does not configure upstream clusters.
+  google.protobuf.BoolValue enable_http2_connect = 43;
 }
 
 message RemoteService {

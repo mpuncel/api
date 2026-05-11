@@ -141,9 +141,14 @@ type ProxyConfig struct {
 	// +protoc-gen-crd:map-value-validation:MaxLength=2048
 	EnvironmentVariables map[string]string `protobuf:"bytes,3,rep,name=environment_variables,json=environmentVariables,proto3" json:"environment_variables,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// Specifies the details of the proxy image.
-	Image         *ProxyImage `protobuf:"bytes,4,opt,name=image,proto3" json:"image,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Image *ProxyImage `protobuf:"bytes,4,opt,name=image,proto3" json:"image,omitempty"`
+	// Enables HTTP/2 extended CONNECT support on sidecar HTTP listeners.
+	// This allows proxies to accept WebSocket upgrades tunneled with RFC 8441.
+	// The setting affects generated sidecar listener HTTP connection managers; it
+	// does not configure upstream clusters.
+	EnableHttp2Connect *wrappers.BoolValue `protobuf:"bytes,5,opt,name=enable_http2_connect,json=enableHttp2Connect,proto3" json:"enable_http2_connect,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *ProxyConfig) Reset() {
@@ -204,6 +209,13 @@ func (x *ProxyConfig) GetImage() *ProxyImage {
 	return nil
 }
 
+func (x *ProxyConfig) GetEnableHttp2Connect() *wrappers.BoolValue {
+	if x != nil {
+		return x.EnableHttp2Connect
+	}
+	return nil
+}
+
 // The following values are used to construct proxy image url.
 // format: `${hub}/${image_name}/${tag}-${image_type}`,
 // example: `registry.istio.io/release/proxyv2:1.11.1` or `registry.istio.io/release/proxyv2:1.11.1-distroless`.
@@ -260,12 +272,13 @@ var File_networking_v1beta1_proxy_config_proto protoreflect.FileDescriptor
 
 const file_networking_v1beta1_proxy_config_proto_rawDesc = "" +
 	"\n" +
-	"%networking/v1beta1/proxy_config.proto\x12\x18istio.networking.v1beta1\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1btype/v1beta1/selector.proto\"\x89\x03\n" +
+	"%networking/v1beta1/proxy_config.proto\x12\x18istio.networking.v1beta1\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1btype/v1beta1/selector.proto\"\xd7\x03\n" +
 	"\vProxyConfig\x12@\n" +
 	"\bselector\x18\x01 \x01(\v2$.istio.type.v1beta1.WorkloadSelectorR\bselector\x12=\n" +
 	"\vconcurrency\x18\x02 \x01(\v2\x1b.google.protobuf.Int32ValueR\vconcurrency\x12t\n" +
 	"\x15environment_variables\x18\x03 \x03(\v2?.istio.networking.v1beta1.ProxyConfig.EnvironmentVariablesEntryR\x14environmentVariables\x12:\n" +
-	"\x05image\x18\x04 \x01(\v2$.istio.networking.v1beta1.ProxyImageR\x05image\x1aG\n" +
+	"\x05image\x18\x04 \x01(\v2$.istio.networking.v1beta1.ProxyImageR\x05image\x12L\n" +
+	"\x14enable_http2_connect\x18\x05 \x01(\v2\x1a.google.protobuf.BoolValueR\x12enableHttp2Connect\x1aG\n" +
 	"\x19EnvironmentVariablesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"+\n" +
@@ -293,17 +306,19 @@ var file_networking_v1beta1_proxy_config_proto_goTypes = []any{
 	nil,                              // 2: istio.networking.v1beta1.ProxyConfig.EnvironmentVariablesEntry
 	(*v1beta1.WorkloadSelector)(nil), // 3: istio.type.v1beta1.WorkloadSelector
 	(*wrappers.Int32Value)(nil),      // 4: google.protobuf.Int32Value
+	(*wrappers.BoolValue)(nil),       // 5: google.protobuf.BoolValue
 }
 var file_networking_v1beta1_proxy_config_proto_depIdxs = []int32{
 	3, // 0: istio.networking.v1beta1.ProxyConfig.selector:type_name -> istio.type.v1beta1.WorkloadSelector
 	4, // 1: istio.networking.v1beta1.ProxyConfig.concurrency:type_name -> google.protobuf.Int32Value
 	2, // 2: istio.networking.v1beta1.ProxyConfig.environment_variables:type_name -> istio.networking.v1beta1.ProxyConfig.EnvironmentVariablesEntry
 	1, // 3: istio.networking.v1beta1.ProxyConfig.image:type_name -> istio.networking.v1beta1.ProxyImage
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	5, // 4: istio.networking.v1beta1.ProxyConfig.enable_http2_connect:type_name -> google.protobuf.BoolValue
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_networking_v1beta1_proxy_config_proto_init() }
